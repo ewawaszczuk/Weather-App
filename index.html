@@ -24,7 +24,7 @@
 
     <form novalidate autocomplete="off" class="find-city">
       <input type="text" name="search" id="search" placeholder="np. Wrocław"/>
-      <button type="submit"><i class="material-icons">search</i></button>
+      <button type="submit", id="submit"><i class="material-icons">search</i></button>
     </form>
     <div class="search-error"></div>
   </div>
@@ -34,11 +34,11 @@
      Poniższy kod możecie potraktować jako template do kolejnych modułów
      Możecie go sklonować używając metody cloneNode(true), i powstawiać odpowiednie wartości z aktualnego miasta.
   -->
-  <div class="module module__weather" hidden>
+  <div class="module module__weather" >
     <button class="btn btn--icon btn--close"><i class="material-icons">close</i></button>
 
     <div class="weather">
-      <div class="weather__icon"><img src="images/icons/partly-cloudy-day.svg"/></div>
+      <div class="weather__icon" id ="main-icon"><img src="images/icons/Fog.svg"/></div>
 
       <div class="weather__info">
         <div class="city">
@@ -55,22 +55,22 @@
 
       <ul class="weather__forecast">
         <li>
-          <span class="day">Wtorek</span> <img src="images/icons/clear-day.svg"/>
+          <span class="day">Wtorek</span> <img src="images/icons/Fog.svg"/>
           <span class="temperature"><span class="temperature__value">10.0</span>&deg;C</span>
         </li>
 
         <li>
-          <span class="day">Środa</span> <img src="images/icons/snow.svg"/>
+          <span class="day">Środa</span> <img src="images/icons/Snow.svg"/>
           <span class="temperature"><span class="temperature__value">-2.3</span>&deg;C</span>
         </li>
 
         <li>
-          <span class="day">Czwartek</span> <img src="images/icons/rain.svg"/>
+          <span class="day">Czwartek</span> <img src="images/icons/Rain.svg"/>
           <span class="temperature"><span class="temperature__value">4.8</span>&deg;C</span>
         </li>
 
         <li>
-          <span class="day">Piątek</span> <img src="images/icons/cloudy.svg"/>
+          <span class="day">Piątek</span> <img src="images/icons/Clouds.svg"/>
           <span class="temperature"><span class="temperature__value">5.0</span>&deg;C</span>
         </li>
 

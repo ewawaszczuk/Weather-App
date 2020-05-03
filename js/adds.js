@@ -1,4 +1,4 @@
-export {myCoordinates, getWeatherIP, createWeatherModule}
+export {myCoordinates, getWeatherIP, createWeatherModule, getCoordinatesCity}
 const DaysOfWeek = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
 
 
@@ -53,3 +53,16 @@ function createWeatherModule(module, weather){
     weatherForecast[i].children[1].src = `images/icons/${weather.day[i+1].overview}.svg`
   }
   }
+
+async function getCoordinatesCity(city){
+  const key = "44777d08-ab13-4022-947d-a900a63bcccd";
+  const url = ` https://graphhopper.com/api/1/geocode?key=${key}&q=${city}`;
+  try{
+    let coordinates = await fetch(url);
+    coordinates = await coordinates.json();
+    return {lat: coordinates.hits[0].point.lat, lon: coordinates.hits[0].point.lng, city: city}
+
+  } catch(e) {
+    console.log(e);
+    }
+}
