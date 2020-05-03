@@ -1,8 +1,6 @@
 export {myCoordinates, getWeatherIP, createWeatherModule, getCoordinatesCity}
 const DaysOfWeek = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
 
-
-
 async function myCoordinates(){
   try{
     let ip = await fetch('http://ip-api.com/json/');
@@ -31,7 +29,6 @@ async function getWeatherIP(ip){
         timestamp: day.dt
       }
     });
-    console.log(result);
     return {city: ip.city, day: result };
   } catch(e) {
     console.log(e);
@@ -46,13 +43,17 @@ function createWeatherModule(module, weather){
   module.getElementsByClassName("pressure__value")[0].innerText = weather.day[0].pressure + "hPa";
   module.getElementsByClassName("humidity__value")[0].innerText = weather.day[0].humidity + "%";
   module.getElementsByClassName("wind-speed__value")[0].innerText = weather.day[0].wind + "m/s";
-  const weatherForecast = module.children[1].children[3].children;
-  for(var i =0; i<= weatherForecast.length; i++){
-    weatherForecast[i].getElementsByClassName("day")[0].innerText =DaysOfWeek[new Date(weather.day[i+1].timestamp* 1000).getDay()]
-    weatherForecast[i].getElementsByClassName("temperature__value")[0].innerText = weather.day[i+1].temp;
-    weatherForecast[i].children[1].src = `images/icons/${weather.day[i+1].overview}.svg`
-  }
-  }
+  const weatherForecast = Array.from(module.children[1].children[3].children);
+  weatherForecast.forEach((element, index) => {
+    element.getElementsByClassName("day")[0].innerText = DaysOfWeek[new Date(weather.day[index +1].timestamp* 1000).getDay()];
+    element.querySelector("img").setAttribute("src", `images/icons/${weather.day[index +1].overview}.svg`)
+    element.querySelector(".temperature__value").innerText = weather.day[index +1].temp;
+  });
+  let deleteButton = module.querySelector(".btn--close");
+  deleteButton.addEventListener("click", function () {
+    this.parentNode.remove();
+  });
+}
 
 async function getCoordinatesCity(city){
   const key = "44777d08-ab13-4022-947d-a900a63bcccd";

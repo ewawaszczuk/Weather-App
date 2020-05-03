@@ -4,6 +4,13 @@ const moduleWeather = document.querySelector(".module__weather");
 const findCity = document.querySelector("#search");
 const submitbtn = document.querySelector("#submit");
 const searchModule = document.querySelector(".module__form");
+const closeSearching = document.querySelector(".btn--close");
+const body = document.querySelector("body");
+let deleteButton = moduleWeather.querySelector(".btn--close");
+
+deleteButton.addEventListener("click", function () {
+  this.parentElement.toggleAttribute("hidden");
+  });
 
 myCoordinates()
   .then((ip) => getWeatherIP(ip))
@@ -12,12 +19,17 @@ myCoordinates()
 
 
 addCityBtn.addEventListener("click", function(){
-  searchModule.removeAttribute("hidden");
+  searchModule.toggleAttribute("hidden");
+})
+
+closeSearching.addEventListener("click", () => {
+  searchModule.toggleAttribute("hidden");
 })
 
 submitbtn.addEventListener("click", (event) => {
-  const city = findCity.value;
   event.preventDefault()
+  const city = findCity.value;
+  body.classList.toggle("loading");
   getCoordinatesCity(city)
     .then((coordinates) => getWeatherIP(coordinates))
     .then((weather) => {
@@ -26,5 +38,7 @@ submitbtn.addEventListener("click", (event) => {
       return createWeatherModule(nextModuleWeather, weather);
     })
     .catch((err) => console.log(err))
+    .then(body.classList.toggle("loading"));
     searchModule.toggleAttribute("hidden");
+
 });
