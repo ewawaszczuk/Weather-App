@@ -8,9 +8,6 @@ const closeSearching = document.querySelector(".btn--close");
 const body = document.querySelector("body");
 let deleteButton = moduleWeather.querySelector(".btn--close");
 
-deleteButton.addEventListener("click", function () {
-  this.parentElement.toggleAttribute("hidden");
-  });
 
 myCoordinates()
   .then((ip) => getWeatherIP(ip))
@@ -34,6 +31,7 @@ submitbtn.addEventListener("click", (event) => {
     .then((coordinates) => getWeatherIP(coordinates))
     .then((weather) => {
       let nextModuleWeather = moduleWeather.cloneNode(true);
+
       document.getElementById("app").appendChild(nextModuleWeather);
       return createWeatherModule(nextModuleWeather, weather);
     })
