@@ -1,5 +1,6 @@
 export {myCoordinates, getWeatherIP, createWeatherModule, getCoordinatesCity}
 const DaysOfWeek = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
+const body = document.querySelector("body");
 
 async function myCoordinates(){
   try{
@@ -35,6 +36,17 @@ async function getWeatherIP(ip){
   }
 }
 
+function changeWeather(city, module) {
+    body.classList.toggle("loading");
+    getCoordinatesCity(city)
+      .then((coordinates) => getWeatherIP(coordinates))
+      .then((weather) => {
+        return createWeatherModule(module, weather);
+    })
+    .catch((error) => console.log(error))
+    .then(body.classList.toggle("loading"));
+}
+
 
 function createWeatherModule(module, weather){
   module.getElementsByClassName("city__name")[0].innerText = weather.city;
@@ -53,6 +65,19 @@ function createWeatherModule(module, weather){
   deleteButton.addEventListener("click", function () {
     this.parentNode.remove();
   });
+  let changeBtn = module.querySelector(".change_button");
+  changeBtn.addEventListener("click", () =>  {
+    let city = module.querySelector(".city__name");
+    city.setAttribute("contentEditable", true);
+    city.focus();
+    city.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      changeWeather(city.innerText, module);
+      city.classList.remove("active");
+      city.setAttribute("contentEditable", false);
+    }
+});
+});
 }
 
 async function getCoordinatesCity(city){
